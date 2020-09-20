@@ -4,14 +4,13 @@ class EntriesController < ApplicationController
     def initialize
 
         # get our secrets.yml file where our private key is stored
-        file_path = File.join(Rails.root, 'config', 'secrets.yml')
+        # file_path = File.join(Rails.root, 'config', 'secrets.yml')
 
         # get the keys in this file for the current env
-        config_keys = HashWithIndifferentAccess.new(YAML::load(IO.read(file_path)))[Rails.env]
+        # config_keys = HashWithIndifferentAccess.new(YAML::load(IO.read(file_path)))[Rails.env]
 
         # get a firebase client using the secret key
-        # adding a comment
-        @firebase = Firebase::Client.new('https://rails-sample-survey.firebaseio.com', config_keys["secret_key_base"])
+        @firebase = Firebase::Client.new('https://rails-sample-survey.firebaseio.com', ENV["SECRET_KEY_BASE"])
     end
 
     def index        
