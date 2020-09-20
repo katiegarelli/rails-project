@@ -54,3 +54,7 @@ gem 'firebase', '0.2.8'
 gem 'pry', '~> 0.13.1'
 
 gem 'jquery-rails'
+
+gem 'sqlite3', group: :development
+gem 'pg', '0.18.1', group: :production
+gem 'rails_12factor', group: :production
