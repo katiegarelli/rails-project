@@ -1,0 +1,26 @@
+
+<h1>Edit Entry</h1>
+ 
+<%= form_with(model: @entry, local: true, :method => :put, :url => {:action => "update", :id => @entry['id']}) do |form| %>
+  <p>
+    <%= form.label :username %><br>
+    <%= form.text_field :username %>
+  </p>    
+  
+  <p>
+      <%= form.label :password %><br>
+      <%= form.text_field :password %>
+  </p>
+
+  <p>
+    <%= form.label :answer %><br>
+    <%= form.text_area :answer %>
+  </p>
+
+  <p>
+      <%= form.submit "Submit" %>
+  </p>
+
+<% end %>
+ 
+<%= link_to 'Back', entries_path %>

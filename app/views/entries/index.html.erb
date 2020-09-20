@@ -1,0 +1,21 @@
+<h1>Listing Entries</h1>
+<td><%= button_to "new entry", new_entry_path(), :method => :get %><td>
+ 
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Answer</th>
+    <th></th>
+  </tr>
+ 
+  <% @entries.each do |entry| %>
+    <tr>
+      <td><%= entry["username"] %></td>
+      <td><%= entry["answer"] %></td>
+
+      <td><%= button_to "show", entry_path(entry), :method => :get %><td>
+      <td><%= button_to "edit", edit_entry_path(entry), :method => :get %><td>
+      <td><%= button_to "delete", entry_path(entry), :method => :delete %><td>
+    </tr>
+  <% end %>
+</table>
