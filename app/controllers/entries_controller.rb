@@ -10,6 +10,7 @@ class EntriesController < ApplicationController
         config_keys = HashWithIndifferentAccess.new(YAML::load(IO.read(file_path)))[Rails.env]
 
         # get a firebase client using the secret key
+        # adding a comment
         @firebase = Firebase::Client.new('https://rails-sample-survey.firebaseio.com', config_keys["secret_key_base"])
     end
 
