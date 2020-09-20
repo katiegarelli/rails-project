@@ -1,26 +1,50 @@
 
-<h1>Edit Entry</h1>
+<style>
+    img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block; /* remove extra space below image */
+    }
+
+    .center {
+      display: block;
+      margin-left: 50px;
+      margin-right: auto;
+    }
+
+    .header {
+      padding: 50px;
+      text-align: center;
+      font-size: 60;
+      font-family: cursive;
+    }
+
+    .radio {
+      width: 20%; 
+      display:inline-block;
+    }
+</style>
+
+<h1 class="header">Update Entry for <%= @entry['username'] %></h1>
  
 <%= form_with(model: @entry, local: true, :method => :put, :url => {:action => "update", :id => @entry['id']}) do |form| %>
-  <p>
-    <%= form.label :username %><br>
-    <%= form.text_field :username %>
-  </p>    
+
+  <div class=center>   
+
+    <%= form.collection_radio_buttons(:answer, [['Marley', 'Marley'] ,['Fred', 'Fred'], ['George', 'George']], :first, :last) do |b| %>
+      <div class="radio">
+        <%= b.text %>
+        <%= b.label { b.radio_button + image_tag(+b.text+'.jpg') }%>
+      </div>
+    <% end %>
   
-  <p>
-      <%= form.label :password %><br>
-      <%= form.text_field :password %>
-  </p>
-
-  <p>
-    <%= form.label :answer %><br>
-    <%= form.text_area :answer %>
-  </p>
-
-  <p>
-      <%= form.submit "Submit" %>
-  </p>
+    <p>
+      <%= form.submit "Submit"  %>
+    </p>
+  </div>
 
 <% end %>
+
+
  
 <%= link_to 'Back', entries_path %>

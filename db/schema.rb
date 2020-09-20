@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20200917013222) do
   create_table "entries", id: false, force: :cascade do |t|
     t.string "id"
     t.string "username"
-    t.string "password"
     t.text "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

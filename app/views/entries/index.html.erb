@@ -1,21 +1,116 @@
-<h1>Listing Entries</h1>
-<td><%= button_to "new entry", new_entry_path(), :method => :get %><td>
- 
-<table>
-  <tr>
-    <th>Username</th>
-    <th>Answer</th>
-    <th></th>
-  </tr>
- 
-  <% @entries.each do |entry| %>
-    <tr>
-      <td><%= entry["username"] %></td>
-      <td><%= entry["answer"] %></td>
 
-      <td><%= button_to "show", entry_path(entry), :method => :get %><td>
-      <td><%= button_to "edit", edit_entry_path(entry), :method => :get %><td>
-      <td><%= button_to "delete", entry_path(entry), :method => :delete %><td>
+<style>
+
+.header {
+  text-align: center;
+  font-size: 60;
+  font-family: cursive;
+}
+
+.button {
+    padding: 10px 10px;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+}
+
+.button:hover {
+  background-color: #555555;
+  color: white;
+}
+
+td {
+    font-size: 20px;
+    font-family: cursive;
+    padding: 30px;
+}
+
+.table-header {
+  font-size: 20px;
+  font-family: cursive;
+  padding: 30px;
+}
+
+.center {
+  display: block;
+  margin-left: 50px;
+  margin-right: auto;
+  position: relative;
+}
+
+img{
+    max-width: 20%;
+    display: block; /* remove extra space below image */
+    margin: auto;
+}
+
+h2 {
+    font-size: 20px;
+    text-align: center;
+    font-family: cursive;
+}
+
+.main-button {
+    font-size: 40px;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.winner {
+  min-height: 90px;
+}
+
+table{
+  padding-top: 80px;
+}
+
+</style>
+
+<div class="center">
+  <h1 class="header">Which of Katie's dogs is the cutest?</h1>
+
+  <div class="winner">
+    <% if @entries['winner'] === 'nobody' %>
+      <h2>No dog is currently in the lead</h2>
+    <% else %>
+      <p class="center">
+        <h2>Current Top Dog</h2>
+        <%= image_tag @entries['winner']+'.jpg' %>
+      </p>
+    <% end %> 
+  </div>
+
+  <div>
+    <%= button_to "Give your opinion", new_entry_path(), :method => :get, class: "button main-button" %>
+  </div>
+  
+  <table>
+    <tr>
+      <th class="table-header" >Who answered</th>
+      <th class="table-header">What dog they find adorable</th>
+      <th></th>
     </tr>
-  <% end %>
-</table>
+  
+    <% @entries["arr"].each do |entry| %>
+      <tr>
+        <td><%= entry["username"] %></td>
+        <td><%= entry["answer"] %></td>
+
+        <td><%= button_to "show", entry_path(entry), :method => :get, class: "button" %><td>
+        <td><%= button_to "edit", edit_entry_path(entry), :method => :get, class: "button" %><td>
+        <td><%= button_to "delete", entry_path(entry), :method => :delete, class: "button" %><td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

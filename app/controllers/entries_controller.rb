@@ -15,19 +15,21 @@ class EntriesController < ApplicationController
 
     def index        
         # get the body which will look like
-        # {"-MHTZ5nXxq80_tQksjVM"=>{"answer"=>"test", "password"=>"", "username"=>""}, "-MHTZAStejSCLXyKfRUn"=>{"answer"=>"test", "password"=>"", "username"=>""}, "-MHTZVYVSlZnw20vgF0E"=>{"answer"=>"test", "password"=>"", "username"=>""}, "-MHTcQBPx0aZAs-OTB86"=>{"answer"=>"test", "password"=>"", "username"=>""}}
+        # {"-MHTZ5nXxq80_tQksjVM"=>{"answer"=>"test", "username"=>""}, "-MHTZAStejSCLXyKfRUn"=>{"answer"=>"test", "username"=>""}, "-MHTZVYVSlZnw20vgF0E"=>{"answer"=>"test", "username"=>""}, "-MHTcQBPx0aZAs-OTB86"=>{"answer"=>"test", "username"=>""}}
         body = @firebase.get("entries").body
         logger.debug "entries: #{body}"
 
         # build a new array
         arr = []
 
+        answerCounts = {'Marley' => 0, 'Fred' => 0, 'George' => 0}
+        logger.debug "Counts: #{answerCounts}"
 
         if body 
             # loop through the body of the response from firebase
             body.each_with_index do |firebaseEntry, index|
                 # our firebaseEntry will be something like
-                # {"-MHTZ5nXxq80_tQksjVM"=>{"answer"=>"test", "password"=>"", "username"=>""}
+                # {"-MHTZ5nXxq80_tQksjVM"=>{"answer"=>"test", "username"=>""}
                 logger.debug "item: #{firebaseEntry}"
 
                 # get the key, aka id from firebase
@@ -40,12 +42,44 @@ class EntriesController < ApplicationController
 
                 # add our metadata object to the array we created
                 arr[index] = val
-            end
+
+                # Get their answer and add it to our answer count object
+                case val['answer']
+                    when 'Marley' then answerCounts['Marley']+=1
+                    when 'Fred' then answerCounts['Fred']+=1
+                    when 'George' then answerCounts['George']+=1
+                    else logger.debug "Answer didnt match any"
+                end
+
+                logger.debug "Counts: #{answerCounts}"
+                    
+          end
         end 
 
+        # make the counts more readable variables
+        marleyCount = answerCounts['Marley']
+        fredCount = answerCounts['Fred']
+        georgeCount = answerCounts['George']
+
+        # find the winner
+        winner="nobody"
+
+        if marleyCount > fredCount && marleyCount > georgeCount 
+            winner="Marley"
+        elsif georgeCount > fredCount && georgeCount > marleyCount 
+            winner="George"
+        elsif fredCount > georgeCount && fredCount > marleyCount 
+            winner="Fred"
+        else 
+            logger.debug "There is a Tie"
+        end
+
         logger.debug "arr: #{arr}"
+        logger.debug "Winner: #{winner}"
+
+        resp = { 'arr' => arr, 'winner' => winner }
         # set the array as our response so we can display it
-        @entries = arr
+        @entries = resp
     end
 
     def show
@@ -90,7 +124,7 @@ class EntriesController < ApplicationController
 
     private
     def entry_params
-        params.require(:entry).permit(:username, :password, :answer, :id)
+        params.require(:entry).permit(:username, :answer, :id)
     end
 
 end
