@@ -103,7 +103,7 @@ GEM
     minitest (5.14.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
-    nio4r (2.5.3)
+    nio4r (2.5.4)
     nokogiri (1.10.10-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     os (1.1.1)

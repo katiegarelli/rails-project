@@ -99,9 +99,9 @@ class EntriesController < ApplicationController
 
         logger.debug "BODY: #{body}"
 
-        @entry = body
+        @entry = Entry.new(body)
 
-        logger.debug "entry: #{body}"
+        logger.debug "BODY: #{@entry}"
     end
 
     def create   
