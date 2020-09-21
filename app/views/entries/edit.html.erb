@@ -27,7 +27,7 @@
 
 <h1 class="header">Update Entry for <%= @entry['username'] %></h1>
  
-<%= form_with(model: @entry, local: true, :method => :put, :url => {:action => "update", :id => @entry['id']}) do |form| %>
+<%= form_with( local: true, :method => :put, :url => {:action => "update", :id => @entry['id']}) do |form| %>
 
   <div class=center>   
 
