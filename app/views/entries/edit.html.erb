@@ -26,10 +26,10 @@
 </style>
 
 <h1 class="header">Update Entry for <%= @entry['username'] %></h1>
- 
-<%= form_with( local: true, :method => :put, :url => {:action => "update", :id => @entry['id']}) do |form| %>
 
-  <div class=center>   
+<%= form_with scope: :entry, :url => {:action => "update", :id => @entry['id']}, local: true, :method => :put do |form| %>
+
+  <div class=center>  
 
     <%= form.collection_radio_buttons(:answer, [['Marley', 'Marley'] ,['Fred', 'Fred'], ['George', 'George']], :first, :last) do |b| %>
       <div class="radio">
@@ -39,12 +39,9 @@
     <% end %>
   
     <p>
-      <%= form.submit "Submit"  %>
+      <%= form.submit %>
     </p>
   </div>
-
 <% end %>
-
-
  
 <%= link_to 'Back', entries_path %>
